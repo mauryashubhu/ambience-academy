@@ -1,420 +1,847 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, SectionList, ScrollView, Dimensions } from 'react-native'
-import DefaultPreference from 'react-native-default-preference';
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TouchableHighlight, Dimensions } from 'react-native'
 import { AuthContext } from '../context'
-const { width, height } = Dimensions.get('window');
 import Icon from "react-native-vector-icons/Ionicons";
+// import NetInfo from "@react-native-community/netinfo";
+
+var { width, height } = Dimensions.get('window');
 
 
 const HomeScreen = ({ navigation, route }) => {
    console.log('homescreen navigation', route)
-   const [modalVisible, setModalVisible] = useState(false);
+   // const [netCheck, setNetCheck] = useState(false);
+   const [modalData, setModalData] = useState({ isOpen: false, selectedItem: null })
    const [DATA, setDATA] = useState([
       {
          ID: 1,
          title: "MATHEMATICS",
-         data: ["class 12", "class 11", "class 10", "class 9", "class 8", "class 7", "class 6", "class 1 to 5"],
          color: 'red',
          data1: [{
             class12: {
                classId: 12,
                classTitle: 'CLASS 12',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class11: {
                classId: 11,
                classTitle: 'CLASS 11',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class10: {
                classId: 10,
                classTitle: 'CLASS 10',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class9: {
                classId: 9,
                classTitle: 'CLASS 9',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class8: {
                classId: 8,
                classTitle: 'CLASS 8',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class7: {
                classId: 7,
                classTitle: 'CLASS 7',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class6: {
                classId: 6,
                classTitle: 'CLASS 6',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class5: {
                classId: 5,
                classTitle: 'CLASS 5',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class4: {
                classId: 4,
                classTitle: 'CLASS 4',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class3: {
                classId: 3,
                classTitle: 'CLASS 3',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class2: {
                classId: 2,
                classTitle: 'CLASS 2',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class1: {
                classId: 1,
                classTitle: 'CLASS 1',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
          }]
       },
       {
          ID: 2,
          title: "SCIENCE",
-         data: ["class 10", "class 9", "class 8", "class 7", "class 6", "class 1 to 5"],
          color: 'green',
          data1: [{
             class12: {
                classId: 12,
                classTitle: 'CLASS 12',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class11: {
                classId: 11,
                classTitle: 'CLASS 11',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class10: {
                classId: 10,
                classTitle: 'CLASS 10',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class9: {
                classId: 9,
                classTitle: 'CLASS 9',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class8: {
                classId: 8,
                classTitle: 'CLASS 8',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class7: {
                classId: 7,
                classTitle: 'CLASS 7',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class6: {
                classId: 6,
                classTitle: 'CLASS 6',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class5: {
                classId: 5,
                classTitle: 'CLASS 5',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class4: {
                classId: 4,
                classTitle: 'CLASS 4',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class3: {
                classId: 3,
                classTitle: 'CLASS 3',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class2: {
                classId: 2,
                classTitle: 'CLASS 2',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class1: {
                classId: 1,
                classTitle: 'CLASS 1',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
          }]
       },
-
       {
          ID: 12,
          title: "FRENCH",
-         data: ["class 12", "class 11", "class 10", "class 9", "class 8", "class 7", "class 6"],
          color: 'gray',
          data1: [{
             class12: {
                classId: 12,
                classTitle: 'CLASS 12',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class11: {
                classId: 11,
                classTitle: 'CLASS 11',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class10: {
                classId: 10,
                classTitle: 'CLASS 10',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class9: {
                classId: 9,
                classTitle: 'CLASS 9',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class8: {
                classId: 8,
                classTitle: 'CLASS 8',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class7: {
                classId: 7,
                classTitle: 'CLASS 7',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
             class6: {
                classId: 6,
                classTitle: 'CLASS 6',
                details: 'ncert book CBSE SYLLABUS',
-               pdf_link: ['url_1', "url_2", "url_3", 'url_4'],
-               video_link: {
-                  video_1: '',
-                  video_2: '',
-                  video_3: ''
+               topics: [{
+                  topicID: 1,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
                },
-               image: '',
+               {
+                  topicID: 2,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 3,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },
+               {
+                  topicID: 4,
+                  topicImage: '',
+                  topiclinks: [{ pdfLink: [], videoLink: [] }]
+               },]
             },
          }]
       },
    ])
    const { signOut } = React.useContext(AuthContext);
 
-   const Item = ({ title }) => (
-      <View style={styles.item}>
-         <Text style={styles.title}>{title}</Text>
-      </View>
-   );
+   // useEffect(() => {
+   //    // return () => {
+   //    //To get the network state once
+   //    NetInfo.fetch().then(state => {
+   //       console.log(
+   //          'Connection 1: ' +
+   //          state.type +
+   //          ', Is connected1?: ' +
+   //          state.isConnected);
+   //       setNetCheck(state.isConnected);
+   //    });
+
+   //    //Subscribe to network state updates
+   //    const unsubscribe = NetInfo.addEventListener(state => {
+   //       console.log(
+   //          'Connection type: ' +
+   //          state.type +
+   //          ', Is connected?: ' +
+   //          state.isConnected);
+   //    });
+
+   //    //To Unsubscribe the network state update
+   //    // unsubscribe();
+   //    // }
+   // }, [NetInfo])
+
+
+   // const internet = () => {
+   //    alert(netCheck ? 'internet connected' : 'internet not connected')
+   // }
+
 
    return (
       <View style={styles.container}>
@@ -432,9 +859,11 @@ const HomeScreen = ({ navigation, route }) => {
                   />
                </TouchableOpacity>
             </View>
-            <View style={{ flex: 8, alignItems: 'center', justifyContent: 'center' }}>
-               <Text style={{ fontSize: 25 }}>{route.params.params.data}</Text>
-            </View>
+            <TouchableOpacity
+               // onPress={() => internet()}
+               style={{ flex: 8, alignItems: 'center', justifyContent: 'center' }}>
+               <Text style={{ fontSize: 25 }}>homescreen</Text>
+            </TouchableOpacity>
             <View style={{ flex: 2 }}>
                <TouchableOpacity
                   onPress={() => signOut()}
@@ -454,18 +883,23 @@ const HomeScreen = ({ navigation, route }) => {
                {DATA.map((value, key) => (
                   <View style={styles.block} key={key}>
                      <View >
-                        <Text style={styles.title}>{value.title}{console.log(value.data1[0])}</Text>
+                        <Text style={styles.title}>{value.title}
+                           {console.log(value.data1[0])}
+                        </Text>
                      </View>
                      <ScrollView showsVerticalScrollIndicator={false} horizontal={true}>
                         <View style={{ flexDirection: 'row' }}>
                            {Object.values(value.data1[0]).map((item, key) => (
-                              <TouchableOpacity key={key} style={[styles.item, { backgroundColor: value.color, borderWidth: 1, marginTop: 60 }]}>
+                              <TouchableOpacity
+                                 key={key}
+                                 onPress={() => setModalData({ isOpen: true, selectedItem: item })}
+                                 style={[styles.item, { backgroundColor: value.color, marginTop: 60 }]}>
                                  <View style={{}}>
                                     <View style={styles.innerbox}>
                                        <Text>{item.classTitle}</Text>
                                     </View>
                                     <View style={{}}>
-                                       <Text>{item.pdf_link}</Text>
+                                       <Text>{item.classId}</Text>
                                        <Text>{item.details}</Text>
                                     </View>
 
@@ -478,10 +912,73 @@ const HomeScreen = ({ navigation, route }) => {
                ))}
             </ScrollView>
          </View>
+         {modalData.isOpen && <ModalScreen
+            modalVisible={modalData.isOpen}
+            item={modalData.selectedItem}
+            onClose={() => setModalData({ isOpen: false, selectedItem: null })}
+            navigation={navigation} />}
       </View>
    )
 }
+
+const ModalScreen = (props,) => {
+   // const isVisible={props.isVisible}
+   console.log('madal items:', props,)
+   return (
+      <View style={styles.centeredView}>
+         <Modal
+            animationType="slide"
+            transparent={true}
+            visible={props.modalvisible}
+            onRequestClose={() => {
+               props.onClose()
+               console.log("Modal has been closed.");
+            }}>
+
+            <View style={styles.centeredView}>
+               <View style={styles.modalheader}>
+                  <TouchableOpacity
+                     onPress={() => internet()}
+                     style={{ flex: 8, alignItems: 'center', justifyContent: 'center' }}>
+                     {/* <Text style={{ fontSize: 25 }}>{data.details}</Text> */}
+                  </TouchableOpacity>
+                  <View style={{ flex: 2, alignContent: 'flex-end', marginRight: -15, marginTop: -5 }}>
+                     <TouchableOpacity
+                        onPress={() => props.onClose()}
+                        style={styles.modalclose}
+                     >
+                        {/* <Text style={{}}>LogOut</Text> */}
+                        <Icon
+                           name='close-outline'
+                           color="blue"
+                           size={24}
+                        />
+                     </TouchableOpacity>
+                  </View>
+               </View>
+               <View style={{ flex: 1, }}>
+                  {props.item.topics.map((value, key) => (
+                     <TouchableOpacity style={styles.modalView} key={key}
+                        onPress={() => {
+                           props.onClose();
+                           props.navigation.navigate('topic',{
+                              topic: value
+                           })
+                        }} >
+                        <Text style={styles.modalText}>topicID : {value.topicID}</Text>
+                     </TouchableOpacity>
+                  ))
+                  }
+               </View>
+
+            </View>
+         </Modal>
+      </View>
+   )
+}
+
 export default HomeScreen
+
 
 const styles = StyleSheet.create({
    container: {
@@ -503,8 +1000,25 @@ const styles = StyleSheet.create({
       shadowRadius: 3,
       elevation: 10,
    },
+   modalheader: {
+      borderRadius: 10,
+      height: 50,
+      alignSelf: 'stretch',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor: 'white',
+   },
+   modalclose: {
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      borderRadius: 10,
+      marginTop: 10,
+      marginLeft: 5,
+      height: 30,
+      width: 55,
+      marginRight: 20
+   },
    item: {
-      // borderWidth: 1,
       justifyContent: 'center',
       height: 180,
       width: 280,
@@ -512,10 +1026,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignContent: 'space-between',
       backgroundColor: "#f9c2ff",
-      // padding: 25,
       paddingLeft: 25,
       paddingRight: 25,
-
       marginVertical: 8,
       marginLeft: 15,
       marginRight: 15,
@@ -529,14 +1041,10 @@ const styles = StyleSheet.create({
 
    },
    menu: {
-      // borderWidth: 1,
       borderColor: 'red',
-      // flex: 2,
       alignItems: 'center',
       justifyContent: 'center',
-      // backgroundColor: 'red',
       borderRadius: 10,
-      // marginRight: -5,
       marginTop: 10,
       marginLeft: 10,
       height: 30,
@@ -544,13 +1052,9 @@ const styles = StyleSheet.create({
 
    },
    logout: {
-      // borderWidth: 1,
-      // flex: 2,
       alignItems: 'flex-end',
       justifyContent: 'center',
-      // backgroundColor: 'red',
       borderRadius: 10,
-      // marginRight: -5,
       marginTop: 10,
       marginLeft: 5,
       height: 30,
@@ -564,7 +1068,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold'
    },
    block: {
-      // borderWidth: 1,
       shadowOpacity: 0.5,
       shadowRadius: 2,
       shadowColor: 'blue',
@@ -581,14 +1084,62 @@ const styles = StyleSheet.create({
       marginVertical: 6
    },
    innerbox: {
-      borderWidth: 1,
-      // width: "100%",
-      width: 240,
-      height: 120,
+      borderWidth: 0.4,
+      width: 260,
+      height: 70,
       marginTop: -60,
-      borderRadius: 5,
+      borderRadius: 50,
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
+   },
+   centeredView: {
+      flex: 1,
+      backgroundColor: 'white',
+      marginLeft: 10,
+      marginRight: 10,
+      marginTop: 15,
+      marginBottom: 15,
+      borderRadius: 10,
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 2,
+         height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 7
+   },
+   modalView: {
+      // borderWidth: 1,
+      borderColor: 'red',
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 5
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5
+   },
+   openButton: {
+      backgroundColor: "#F194FF",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+   },
+   textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+   },
+   modalText: {
+      marginBottom: 15,
+      textAlign: "center"
    }
 });

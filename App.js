@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, createContext } from 'react'
+import React, { useState, useEffect, useMemo, createContext, useCallback } from 'react'
 import { Text, View, StyleSheet, Image, Dimensions } from 'react-native'
 import { NavigationContainer, createSwitchNavigator } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,6 +12,9 @@ import RegisterScreen from './Screens/RegisterScreen'
 import HomeScreen from './Screens/home/HomeScreen'
 import ProfileScreen from './Screens/home/ProfileScreen'
 import SettingsScreen from './Screens/home/SettingsScreen'
+import TopicScreen from './Screens/components/Topics'
+import pdfViewScreen from './Screens/components/pdfview'
+import videoScreen from './Screens/components/videoScreen'
 
 import { AuthContext } from './Screens/context'
 
@@ -23,8 +26,9 @@ import { AuthContext } from './Screens/context'
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const DrawerScreen = ({ navigation, route, isdata }) => (
+const DrawerScreen = ({navigation, route }) => (
   <Drawer.Navigator initialRouteName={'Home'}>
+    {console.log('app params', route)}
     <Drawer.Screen name="Home" component={HomeScreen} initialParams={route} />
 
     <Drawer.Screen name="Profile" component={ProfileScreen} />
@@ -37,27 +41,23 @@ const DrawerScreen = ({ navigation, route, isdata }) => (
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isSignedIn, setIsSignedIn] = useState('');
-  const [isdata, setIsdata] = useState({});
-  const [count, setCount] = useState(5);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    getData()
-  }, []);
-  useEffect(() => {
+    // getData();
     setTimeout(() => {
       setIsLoading(false);
     }, 2500)
   }, [])
 
-  const getData = () => {
+  function getData() {
     try {
-      DefaultPreference.get('password').then(function (value) {
-        if (value != null) {
-          setIsSignedIn(value)
-          setIsdata(value)
-          console.log('getting defaulrprefrences from getdata', value)
-        }
+      DefaultPreference.getMultiple(['email', 'password']).then(function (value) {
+        if (value[0] != null) {
+          setIsSignedIn(value[0])
+          // setIsdata(value[0])
+          console.log('getting defaulrprefrences from getdata', value[0])
+        } 
       });
     }
     catch (err) {
@@ -67,25 +67,29 @@ export default function App() {
 
   const authcontext = useMemo(() => {
     return {
-      // signIn: () => {
-      //   setIsLoading(false);
-      //   setUserToken("asdf");
-      // },
-      signUp: () => {
-        console.log('khuchnhi')
+      signIn: (value) => {
+        console.log('signIN me call aayigyi')
+        // getData();
+        setIsSignedIn(value)
+        setIsLoading(false);
+        // setUserToken("asdf");
+      },
+      signUp: (value) => {
+        console.log('signup me call aayigyi')
         getData();
+        // setIsSignedIn(value)
         setIsLoading(false);
       },
       signOut: () => {
         DefaultPreference.clearAll().then(function () {
-          console.log('')
+          console.log('default pref kahaali kr diya')
         })
-        console.log()
-        setIsSignedIn('')
+        console.log('log out me call agyi...')
+        setIsSignedIn(false)
         setIsLoading(false);
       }
     };
-  }, []);
+  });
 
   if (isLoading) {
     return <View style={styles.container}>
@@ -109,9 +113,12 @@ export default function App() {
               </>
             ) : (
                 <>
-                  <Stack.Screen name="Home" component={DrawerScreen} initialParams={{ data: isdata }} />
-                  {/* <Stack.Screen name="Profile" component={ProfileScreen} />
-                <Stack.Screen name="Settings" component={SettingsScreen} /> */}
+                  <Stack.Screen name="Home" component={DrawerScreen} 
+                  // initialParams={{ data: isdata }} 
+                  />
+                  <Stack.Screen name="topic" component={TopicScreen} />
+                  <Stack.Screen name="pdfview" component={pdfViewScreen} />
+                  <Stack.Screen name="videoscreen" component={videoScreen} />
                 </>
               )
             }

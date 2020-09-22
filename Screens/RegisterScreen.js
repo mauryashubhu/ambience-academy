@@ -13,19 +13,56 @@ const RegisterScreen = ({ navigation }) => {
     const { signUp } = useContext(AuthContext)
 
     const handleSubmitPress = () => {
+        console.log('userpassword', userPassword)
         if (!userEmail && !userPassword && !userPhone && !userName) {
             alert('Please fill properly');
-        } else {
-            saveData();
-        }
+        } 
+        // else {
+        //     fetch('https://2b55d4d595ef.ngrok.io/form', {
+        //         method: 'POST',
+        //         headers: {
+        //             Accept: 'application/json',
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             username: userName,
+        //             userphone: userPhone,
+        //             useremail: userEmail,
+        //             userpassword: userPassword,
+        //         })
+        //     })
+        //         .then(response => response.json())
+        //         .then(json => {
+        //             console.log(json);
+        //             if(json.status === "200"){
+        //                 console.log("SAVEDATA KOO CALL JAANIHAI?")
+        //                 // const data =json.data;
+        //                 // saveData(data);
+        //                 navigation.navigate('Login')
+        //             }
+                    
+        //         })
+        //         .catch((error) => {
+        //             console.error("error hai", error);
+        //             alert(error)
+        //             // alert('mail already exist')
+        //         })
+        // }
+        saveData();
     }
 
     function saveData() {
         try {
-            DefaultPreference.setMultiple({'useId': userPhone, 'phone': userPhone, 'email': userEmail, 'password': userPassword}).then(function () {
-                console.log('done')
+            DefaultPreference.setMultiple({
+                'useId': userPhone,
+                'phone': userPhone,
+                'email': userEmail,
+                'password': userPassword
+            }).then(function () {
+                console.log('default prefrences me done')
+                signUp();
+                // navigation.navigate('Login')
             });
-            signUp(userPassword);
         }
         catch (err) {
             alert(err)
