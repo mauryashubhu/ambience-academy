@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "796221255236",
+    "firebase_url": "https://ambience-eda41.firebaseio.com",
+    "project_id": "ambience-eda41",
+    "storage_bucket": "ambience-eda41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796221255236:android:95cd6ab63763fc8b5a9611",
+        "android_client_info": {
+          "package_name": "com.ambience"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796221255236-8i49cg8r5j38jn3vkl266t8v2cfogh5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5m-G533ECIyqsEwA1Mshu6RGAwd2YXyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796221255236-8i49cg8r5j38jn3vkl266t8v2cfogh5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
