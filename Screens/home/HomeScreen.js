@@ -811,6 +811,7 @@ const HomeScreen = ({ navigation, route }) => {
    ])
    const { signOut } = React.useContext(AuthContext);
 
+
    // useEffect(() => {
    //    // return () => {
    //    //To get the network state once
@@ -851,7 +852,6 @@ const HomeScreen = ({ navigation, route }) => {
                   onPress={() => navigation.toggleDrawer()}
                   style={styles.menu}
                >
-                  {/* <Text style={{}}>LogOut</Text> */}
                   <Icon
                      name='menu-outline'
                      color="blue"
@@ -869,7 +869,6 @@ const HomeScreen = ({ navigation, route }) => {
                   onPress={() => signOut()}
                   style={styles.logout}
                >
-                  {/* <Text style={{}}>LogOut</Text> */}
                   <Icon
                      name='exit-outline'
                      color="blue"
@@ -961,7 +960,7 @@ const ModalScreen = (props,) => {
                      <TouchableOpacity style={styles.modalView} key={key}
                         onPress={() => {
                            props.onClose();
-                           props.navigation.navigate('topic',{
+                           props.navigation.navigate('topic', {
                               topic: value
                            })
                         }} >
@@ -970,7 +969,6 @@ const ModalScreen = (props,) => {
                   ))
                   }
                </View>
-
             </View>
          </Modal>
       </View>

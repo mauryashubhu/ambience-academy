@@ -106,6 +106,7 @@ const LoginScreen = ({ navigation }) => {
       console.log('login details fetching from default performance1')
       try {
          DefaultPreference.getMultiple(['email', 'password']).then(function (value) {
+            console.log('getting defaulrprefrences from login', value)
             if (value[0] != null) {
                //  const {value} = value[0];
                console.log('getting defaulrprefrences from getdata', value)

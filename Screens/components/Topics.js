@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ProgressBarAndroid, PermissionsAndroid, Alert, Platform } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons";
 import Video from 'react-native-video';
-import RNFetchBlob from 'rn-fetch-blob'
+// import RNFetchBlob from 'rn-fetch-blob'
 import Swiper from 'react-native-swiper'
 import { AuthContext } from '../context'
 import { ScrollView } from 'react-native-gesture-handler';
+import Downloadpdf from './Downloadpdf'
 // import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -39,52 +40,6 @@ const TopicScreen = ({ route, navigation }) => {
 
     const { signOut } = React.useContext(AuthContext);
 
-    // downloadFile = async (pdfdownload) => {
-    //     try {
-    //         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-    //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    //             pdfDownload(pdfdownload);
-    //         } else {
-    //             Alert.alert('Permission Denied!', 'You need to give storage permission to download the file');
-    //         }
-    //     } catch (err) {
-    //         console.warn(err);
-    //     }
-    // }
-
-
-    // const pdfDownload = (pdfdownload) => {
-    //     const date = new Date();
-    //     const { config, fs } = RNFetchBlob
-    //     console.log('RNFetchBlob1', RNFetchBlob)
-    //     let PictureDir = fs.dirs.DownloadDir // this is the pictures directory. You can check the available directories in the wiki.
-    //     const android = RNFetchBlob.android
-
-    //     let options = {
-    //         fileCache: true,
-    //         indicator: true,
-    //         // overwrite: true,
-    //         addAndroidDownloads: {
-    //             useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
-    //             notification: true,
-    //             path: PictureDir, // this is the path where your downloaded file will live in
-    //             description: 'A PDFfile.',
-    //             mime: 'application/pdf',
-    //             // overwrite: true,
-    //             mediaScannable: false,
-    //             title: 'pdf file',
-
-
-    //         }
-    //     }
-    //     config(options).fetch('GET', pdfdownload).then((res) => {
-    //         console.log('rnfetchBlob', res)
-    //         console.log('download pdf ho gyi hai', res.path())
-    //         // if (Platform.OS = 'android') {
-    //         //     android.actionViewIntent(res.path(), 'application/pdf')
-    //         // }
-    //     }).catch((error) => { alert(error) })
-    // }
 
     return (
         <View style={styles.container}>
@@ -122,15 +77,6 @@ const TopicScreen = ({ route, navigation }) => {
                 <View style={styles.cardUpper}>
                     <Swiper height={400} containerStyle={{ marginTop: -80 }} >
                         {videolink.map((video, key) => (
-                            // <Video key={key}
-                            //     source={{ uri: video }}   // Can be a URL or a local file. 
-                            //     controls
-                            //     paused
-                            //     onError={(err) => { alert('problem due to', error) }}
-                            //     style={{
-                            //          width: '100%', height: 400, justifyContent: 'center',alignItems :'center'
-                            //     }}
-                            // />
                             <TouchableOpacity key={key} onPress={() => navigation.navigate('videoscreen', { params: { video } })}
                                 style={{ width: '100%', height: 400, justifyContent: 'center', alignItems: 'center' }}>
                                 <Icon
@@ -147,9 +93,8 @@ const TopicScreen = ({ route, navigation }) => {
                         <View key={key} style={styles.pdfcard}>
                             <View style={{ marginLeft: 12, width: '60%' }} >
                                 <Text style={{ fontSize: 26 }}>pdf link{pdf.material}</Text>
-
                             </View>
-                            {/* <TouchableOpacity onPress={() => { Download(pdf) }}
+                            {/* <TouchableOpacity onPress={() => { Downloadpdf(pdf) }}
                                 style={{ marginRight: 20, width: '12%', alignItems: 'flex-end' }}>
                                 <Icon
                                     name='download-outline'
@@ -174,55 +119,6 @@ const TopicScreen = ({ route, navigation }) => {
         </View>
     )
 }
-
-// downloadFile = async (pdf) => {
-//     try {
-//         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-//         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//             pdfDownload(pdf);
-//         } else {
-//             Alert.alert('Permission Denied!', 'You need to give storage permission to download the file');
-//         }
-//     } catch (err) {
-//         console.warn(err);
-//     }
-// }
-
-
-function Download(pdf) {
-    console.log('pdf in download', pdf)
-    const  pdflink  = pdf.link;
-    const date = new Date();
-    const { config, fs } = RNFetchBlob
-    console.log('RNFetchBlob1', RNFetchBlob)
-    let PictureDir = fs.dirs.DownloadDir // this is the pictures directory. You can check the available directories in the wiki.
-    const android = RNFetchBlob.android
-
-    let options = {
-        fileCache: true,
-        indicator: true,
-        // overwrite: true,
-        addAndroidDownloads: {
-            useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
-            notification: true,
-            path: PictureDir, // this is the path where your downloaded file will live in
-            description: 'A PDFfile.',
-            mime: 'application/pdf',
-            overwrite: true,
-            mediaScannable: false,
-            title: 'pdf file',
-        }
-    }
-    config(options).fetch('GET', pdflink).then((res) => {
-        console.log('rnfetchBlob', res)
-        console.log('download pdf ho gyi hai', res.path())
-        // if (Platform.OS = 'android') {
-        //     android.actionViewIntent(res.path(), 'application/pdf')
-        // }
-    }).catch((error) => { alert(error) })
-}
-
-
 
 export default TopicScreen
 

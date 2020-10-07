@@ -242,10 +242,13 @@ android {
         project(':react-native-video')
         implementation "androidx.appcompat:appcompat:1.0.0"
         project(':react-native-view-pdf')
-        implementation project(':rn-fetch-blob')
+        project(':rn-fetch-blob')
         project(':react-native-orientation')
         implementation 'com.google.firebase:firebase-analytics:17.5.0'
         implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+        project(':react-native-fs')
+
+
 
     }
 

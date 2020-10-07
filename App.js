@@ -17,7 +17,9 @@ import pdfViewScreen from './Screens/components/pdfview'
 import videoScreen from './Screens/components/videoScreen'
 
 import { AuthContext } from './Screens/context'
+import { openDatabase } from 'react-native-sqlite-storage';
 
+var db = openDatabase({ name: 'UserDatabase.db' });
 
 
 
@@ -45,6 +47,24 @@ export default function App() {
 
   useEffect(() => {
     // getData();
+    db.transaction(function (txn) {
+      txn.executeSql(
+         "SELECT name FROM sqlite_master WHERE type='table' AND name='ambience'",
+         [],
+         function (tx, res) {
+            console.log('item in table:', res.rows.length);
+            if (res.rows.length == 0) {
+               txn.executeSql('DROP TABLE IF EXISTS ambience', []);
+               txn.executeSql(
+                  'CREATE TABLE IF NOT EXISTS ambience(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name VARCHAR(20), user_contact INT(10), user_email VARCHAR(255), user_password VARCHAR(20))',
+                  []
+               );
+            } else {console.log('database entry ' , res.rows.item(0))}
+         }
+      );
+   });
+
+
     setTimeout(() => {
       setIsLoading(false);
     }, 2500)
