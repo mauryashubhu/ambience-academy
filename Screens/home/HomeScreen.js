@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TouchableHighlight, Dimensions } from 'react-native'
 import { AuthContext } from '../context'
 import Icon from "react-native-vector-icons/Ionicons";
+import { color } from 'react-native-reanimated';
 // import NetInfo from "@react-native-community/netinfo";
 
 var { width, height } = Dimensions.get('window');
@@ -854,7 +855,7 @@ const HomeScreen = ({ navigation, route }) => {
                >
                   <Icon
                      name='menu-outline'
-                     color="blue"
+                     color="#00FFA2"
                      size={35}
                   />
                </TouchableOpacity>
@@ -871,8 +872,8 @@ const HomeScreen = ({ navigation, route }) => {
                >
                   <Icon
                      name='exit-outline'
-                     color="blue"
-                     size={24}
+                     color="#fb5b5a"
+                     size={30}
                   />
                </TouchableOpacity>
             </View>
@@ -889,21 +890,33 @@ const HomeScreen = ({ navigation, route }) => {
                      <ScrollView showsVerticalScrollIndicator={false} horizontal={true}>
                         <View style={{ flexDirection: 'row' }}>
                            {Object.values(value.data1[0]).map((item, key) => (
-                              <TouchableOpacity
-                                 key={key}
-                                 onPress={() => setModalData({ isOpen: true, selectedItem: item })}
-                                 style={[styles.item, { backgroundColor: value.color, marginTop: 60 }]}>
-                                 <View style={{}}>
-                                    <View style={styles.innerbox}>
-                                       <Text>{item.classTitle}</Text>
+                              <View  key={key} style={[styles.item, { backgroundColor: '#fb5b5a', }]}>
+                                 {/* style={{ width: "100%", marginBottom: styles.item.height / 2, borderWidth:1}} */}
+                                 <View >
+                                    <View style={{}}>
+                                       <Text style={{ fontSize: 16, color: 'white' }}>{item.classTitle}</Text>
                                     </View>
                                     <View style={{}}>
-                                       <Text>{item.classId}</Text>
-                                       <Text>{item.details}</Text>
+                                       <Text style={{ fontSize: 16, color: 'white' }}>{item.classId}</Text>
+                                       <Text style={{ fontSize: 16, color: 'white' }}>{item.details}</Text>
                                     </View>
-
                                  </View>
-                              </TouchableOpacity>
+                                 <TouchableOpacity
+                                    onPress={() => setModalData({ isOpen: true, selectedItem: item })}
+                                    >
+                                       <Icon
+                                       name='book-sharp'
+                                       color="#00FFA2"
+                                       size={35}
+                                       style={{shadowOpacity: 0.6,
+                                          shadowRadius: 2,
+                                          shadowColor: 'black',
+                                          shadowOffset: { height: 1, width: 4 },
+                                          elevation: 3,
+                                       borderRadius:12}}
+                                       />
+                                 </TouchableOpacity>
+                              </View>
                            ))}
                         </View>
                      </ScrollView>
@@ -955,20 +968,22 @@ const ModalScreen = (props,) => {
                      </TouchableOpacity>
                   </View>
                </View>
-               <View style={{ flex: 1, }}>
-                  {props.item.topics.map((value, key) => (
-                     <TouchableOpacity style={styles.modalView} key={key}
-                        onPress={() => {
-                           props.onClose();
-                           props.navigation.navigate('topic', {
-                              topic: value
-                           })
-                        }} >
-                        <Text style={styles.modalText}>topicID : {value.topicID}</Text>
-                     </TouchableOpacity>
-                  ))
-                  }
-               </View>
+               <ScrollView>
+                  <View style={{ flex: 1, }}>
+                     {props.item.topics.map((value, key) => (
+                        <TouchableOpacity style={styles.modalView} key={key}
+                           onPress={() => {
+                              props.onClose();
+                              props.navigation.navigate('topic', {
+                                 topic: value
+                              })
+                           }} >
+                           <ScrollView><Text style={styles.modalText}>topicID : {value.topicID}</Text></ScrollView>
+                        </TouchableOpacity>
+                     ))
+                     }
+                  </View>
+               </ScrollView>
             </View>
          </Modal>
       </View>
@@ -1014,18 +1029,19 @@ const styles = StyleSheet.create({
       marginLeft: 5,
       height: 30,
       width: 55,
-      marginRight: 20
+      marginRight: 20,
    },
    item: {
-      justifyContent: 'center',
-      height: 180,
-      width: 280,
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      height: 200,
+      width: 300,
       borderRadius: 10,
-      flexDirection: 'row',
+      flexDirection: 'column',
       alignContent: 'space-between',
       backgroundColor: "#f9c2ff",
-      paddingLeft: 25,
-      paddingRight: 25,
+      // paddingLeft: 25,
+      // paddingRight: 25,
       marginVertical: 8,
       marginLeft: 15,
       marginRight: 15,
@@ -1071,7 +1087,7 @@ const styles = StyleSheet.create({
       shadowColor: 'blue',
       shadowOffset: { height: 1, width: 1 },
       elevation: 3,
-      backgroundColor: '#fff',
+      backgroundColor: '#00FFA2',
       borderRadius: 6,
       marginBottom: 10,
       marginLeft: 5,
@@ -1106,13 +1122,14 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      elevation: 7
+      elevation: 7,
+
    },
    modalView: {
       // borderWidth: 1,
       borderColor: 'red',
       margin: 20,
-      backgroundColor: "white",
+      backgroundColor: "#fb5b5a",
       borderRadius: 20,
       padding: 35,
       alignItems: "center",
@@ -1138,6 +1155,9 @@ const styles = StyleSheet.create({
    },
    modalText: {
       marginBottom: 15,
-      textAlign: "center"
+      textAlign: "center",
+      color: 'white',
+      fontSize: 18,
+      fontFamily: 'san-serif'
    }
 });

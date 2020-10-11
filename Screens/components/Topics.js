@@ -36,6 +36,9 @@ const TopicScreen = ({ route, navigation }) => {
         { material: 'A', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
         { material: 'B', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
         { material: 'C', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
+        { material: 'D', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
+        { material: 'E', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
+        { material: 'F', link: 'http://samples.leanpub.com/thereactnativebook-sample.pdf' },
     ]);
 
     const { signOut } = React.useContext(AuthContext);
@@ -51,7 +54,7 @@ const TopicScreen = ({ route, navigation }) => {
                     >
                         <Icon
                             name='chevron-back-outline'
-                            color="blue"
+                            color="#00FFA2"
                             size={28}
                         />
                     </TouchableOpacity>
@@ -67,8 +70,8 @@ const TopicScreen = ({ route, navigation }) => {
                     >
                         <Icon
                             name='exit-outline'
-                            color="blue"
-                            size={24}
+                            color="#fb5b5a"
+                            size={30}
                         />
                     </TouchableOpacity>
                 </View>
@@ -81,20 +84,22 @@ const TopicScreen = ({ route, navigation }) => {
                                 style={{ width: '100%', height: 400, justifyContent: 'center', alignItems: 'center' }}>
                                 <Icon
                                     name='videocam-outline'
-                                    color="blue"
-                                    size={24}
+                                    color="white"
+                                    size={50}
                                 />
                             </TouchableOpacity>
                         ))}
                     </Swiper>
                 </View>
-                <View style={styles.cardLower}>
-                    {pdflink.map((pdf, key) => (
-                        <View key={key} style={styles.pdfcard}>
-                            <View style={{ marginLeft: 12, width: '60%' }} >
-                                <Text style={{ fontSize: 26 }}>pdf link{pdf.material}</Text>
-                            </View>
-                            {/* <TouchableOpacity onPress={() => { Downloadpdf(pdf) }}
+                
+                    <View style={styles.cardLower}>
+                        {pdflink.map((pdf, key) => (
+
+                            <View key={key} style={styles.pdfcard}>
+                                <View style={{ marginLeft: 12, width: '60%' }} >
+                                    <Text style={{ fontSize: 26, color: 'white' }}>pdf link{pdf.material}</Text>
+                                </View>
+                                {/* <TouchableOpacity onPress={() => { Downloadpdf(pdf) }}
                                 style={{ marginRight: 20, width: '12%', alignItems: 'flex-end' }}>
                                 <Icon
                                     name='download-outline'
@@ -102,19 +107,19 @@ const TopicScreen = ({ route, navigation }) => {
                                     size={24}
                                 />
                             </TouchableOpacity> */}
-                            <TouchableOpacity onPress={() => navigation.navigate('pdfview', { params: { pdf } })}
-                                style={{ marginRight: 20, width: '12%', alignItems: 'flex-end' }}>
-                                <Icon
-                                    name='book-outline'
-                                    color="blue"
-                                    size={24}
-                                />
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigation.navigate('pdfview', { params: { pdf } })}
+                                    style={{ marginRight: 20, width: '12%', alignItems: 'flex-end' }}>
+                                    <Icon
+                                        name='book-outline'
+                                        color="white"
+                                        size={30}
+                                    />
+                                </TouchableOpacity>
 
-                        </View>
+                            </View>
 
-                    ))}
-                </View>
+                        ))}
+                    </View>
             </View>
         </View>
     )
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
     },
     cardUpper: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#00FFA2',
         marginLeft: 10,
         marginRight: 10,
         marginTop: 15,
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
     },
     pdfcard: {
         // flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#fb5b5a',
         borderRadius: 10,
         shadowColor: "#000",
         shadowOffset: {

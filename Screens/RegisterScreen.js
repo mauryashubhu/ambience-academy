@@ -131,7 +131,7 @@ const RegisterScreen = ({ navigation }) => {
                value={userName}
                onChangeText={userName => setUserName(userName)}
                placeholder="Enter Name"
-               placeholderTextColor="gray"
+               placeholderTextColor="black"
                autoCapitalize="none"
                keyboardType="email-address"
             />
@@ -142,7 +142,7 @@ const RegisterScreen = ({ navigation }) => {
                value={userPhone}
                onChangeText={userPhone => setUserPhone(userPhone)}
                placeholder="Enter Phone"
-               placeholderTextColor="gray"
+               placeholderTextColor="black"
             />
          </View>
          <View style={styles.inputView}>
@@ -151,7 +151,7 @@ const RegisterScreen = ({ navigation }) => {
                value={userEmail}
                onChangeText={UserEmail => setUserEmail(UserEmail)}
                placeholder="Enter Email"
-               placeholderTextColor="gray"
+               placeholderTextColor="black"
                autoCapitalize="none"
                keyboardType="email-address"
             />
@@ -162,7 +162,7 @@ const RegisterScreen = ({ navigation }) => {
                value={userPassword}
                onChangeText={UserPassword => setUserPassword(UserPassword)}
                placeholder="Enter Password"
-               placeholderTextColor="gray"
+               placeholderTextColor="black"
                secureTextEntry={true}
             />
          </View>
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
    },
    inputView: {
       width: "80%",
-      backgroundColor: "#465881",
+      backgroundColor: "#00FFA2",
       borderRadius: 25,
       height: 50,
       marginBottom: 20,

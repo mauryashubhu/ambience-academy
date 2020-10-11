@@ -29,6 +29,7 @@ export default function ProfileScreen({ props, navigation }) {
 
     useEffect(() => {
         getData();
+        
     }, [])
 
     function getData() {
@@ -108,8 +109,8 @@ export default function ProfileScreen({ props, navigation }) {
                     >
                         <Icon
                             name='exit-outline'
-                            color="blue"
-                            size={24}
+                            color="#fb5b5a"
+                            size={30}
                         />
                     </TouchableOpacity>
                 </View>
